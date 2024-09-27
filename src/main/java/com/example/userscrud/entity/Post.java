@@ -8,11 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Post {
 	
 	@Id
@@ -24,25 +22,28 @@ public class Post {
 	@JsonIgnore
 	private User user;
 	
-	
+	// Getters and Setters
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-
 }

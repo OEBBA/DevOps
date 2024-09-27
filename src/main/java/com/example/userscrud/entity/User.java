@@ -13,22 +13,19 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min=2, message="name should have atleast 2 characters.")
+	@Size(min=2, message="name should have at least 2 characters.")
 	private String name;
 	
-	@NotBlank(message="email is blank, please enter valid email address.")
+	@NotBlank(message="email is blank, please enter a valid email address.")
 	@JsonProperty("email_address")
 	private String email;
 	
@@ -38,6 +35,7 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Post> posts;
 
+	// Getters and Setters
 	public String getName() {
 		return name;
 	}
@@ -69,7 +67,4 @@ public class User {
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
-
-	
-
 }
