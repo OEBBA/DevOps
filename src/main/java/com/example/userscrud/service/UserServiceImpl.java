@@ -8,42 +8,52 @@ import com.example.userscrud.entity.User;
 import com.example.userscrud.exception.UserNotFoundException;
 import com.example.userscrud.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
-
 @Service
 public class UserServiceImpl implements UserService {
-	
-	
-	private UserRepository userRepository;
-	
-	public UserServiceImpl(UserRepository repository) {
-		this.userRepository=repository;
-	}
+    
+    private final UserRepository userRepository;
 
-	@Override
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
-	}
+    public UserServiceImpl(UserRepository repository) {
+        this.userRepository = repository;
+    }
 
-	@Override
-	public User createUser(User user) {
-		return userRepository.save(user);
-	}
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
-	@Override
-	public User getUser(String email) {
-		User user = userRepository.findByEmailAddress(email);
-		if(user == null) {
-			throw new UserNotFoundException("User with email : "+email+" doesn't exist.");
-		}
-		
-		return user;
-	}
+    @Override
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
 
-	@Override
-	public void deleteUser(String email) {
-		User user = userRepository.findByEmailAddress(email);
-		userRepository.delete(user);
-	}
+    @Override
+    public User getUser(String email) {
+        User user = userRepository.findByEmailAddress(email);
+        if (user == null) {
+            throw new UserNotFoundException("User with email: " + email + " doesn't exist.");
+        }
+        return user;
+    }
 
+    @Override
+    public void deleteUser(String email) {
+        User user = userRepository.findByEmailAddress(email);
+        if (user == null) {
+            throw new UserNotFoundException("User with email: " + email + " doesn't exist.");
+        }
+        userRepository.delete(user);
+    }
+
+    public void deleteUserByName(String name) throws Exception {
+        List<User> users = userRepository.findByName(name);
+        
+        if (users.size() > 1) {
+            throw new Exception("Multiple users found with the name: " + name + ". No user deleted.");
+        } else if (users.size() == 1) {
+            userRepository.delete(users.get(0));
+        } else {
+            throw new Exception("No user found with the name: " + name + ".");
+        }
+    }
 }

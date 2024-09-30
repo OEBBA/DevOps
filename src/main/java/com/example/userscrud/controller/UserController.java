@@ -85,5 +85,15 @@ public class UserController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	@DeleteMapping("/deleteByName/{name}")
+	public ResponseEntity<String> deleteUserByName(@PathVariable String name) {
+		try {
+			userService.deleteUserByName(name);
+			return ResponseEntity.ok("User deleted successfully.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
 
 }
